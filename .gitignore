@@ -138,3 +138,6 @@ dmypy.json
 *.png
 *.tiff
 *.pdf
+
+# Other stuff
+.DS_Store
