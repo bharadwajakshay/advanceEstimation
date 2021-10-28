@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# MAtlab
+*.asv
+*.mat
+
+# Images
+*.jpg
+*.png
+*.tiff
+*.pdf
