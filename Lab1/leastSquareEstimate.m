@@ -1,4 +1,10 @@
-function [outputArg1,outputArg2] = LeastSquaresEstimate(inputArg1,inputArg2)
+function [estimatedRecPos,deltaPs] = leastSquareEstimate(currentdata, Cl, estimatedRecPos, sigmaNot)
+
+c = physconst('LightSpeed');
+stop = false;
+count = 0;
+prevMean = 100;
+
 while ~stop
         % Step 1: caluclate the pseudo ranges for each satellite
         % measured pseudoranges
@@ -59,5 +65,5 @@ while ~stop
          end
 
         count = count + 1;
-    end
+end
 end
