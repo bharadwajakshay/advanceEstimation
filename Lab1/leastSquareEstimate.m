@@ -1,11 +1,11 @@
 function [estimatedRecPos,deltaPs] = leastSquareEstimate(currentdata, Cl, estimatedRecPos, sigmaNot)
 
-c = physconst('LightSpeed');
-stop = false;
-count = 0;
-prevMean = 100;
+    c = physconst('LightSpeed');
+    stop = false;
+    count = 0;
+    prevMean = 100;
 
-while ~stop
+    while ~stop
         % Step 1: caluclate the pseudo ranges for each satellite
         % measured pseudoranges
         Ps = currentdata(:,6);
@@ -16,12 +16,12 @@ while ~stop
             (currentdata(:,5)-estimatedRecPos(3)).^2);
 
         % Step 2.a: Calculate the delta Pseudo ranges
-        deltaP = Ps - Po;
+        deltaP = Ps - (Po+(estimatedRecPos(4)*c));
 
         % Step 3: Calculate the design matrix
         A = [(estimatedRecPos(1) - currentdata(:,3))./Po, ...
             (estimatedRecPos(2) - currentdata(:,4))./Po, ...
-            (estimatedRecPos(3) - currentdata(:,5))./Po, repmat(c,(size(Po)))];
+            (estimatedRecPos(3) - currentdata(:,5))./Po, repmat(c,size(Po))];
 
         % Step 3.a: Calculate the weight matrix
         if (det(Cl)~=0)
@@ -65,5 +65,5 @@ while ~stop
          end
 
         count = count + 1;
-end
+    end
 end
