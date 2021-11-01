@@ -1,8 +1,5 @@
-function [outputArg1,outputArg2] = getHandRMat(inputArg1,inputArg2)
-% Based on the measurement, get R mat
-    idx = find(satPos(:,1)==timeEpochs(eachtimestamp));
-    currentdata = satPos(idx,:);
-    
+function [H, R, Po] = getHandRMat(currentdata,estimatedRecPos,sigmaNot)
+
     % Caluclate R and H for calculating Kalman Gain
     R = getErrorCovMatObs(sigmaNot, currentdata);
     
