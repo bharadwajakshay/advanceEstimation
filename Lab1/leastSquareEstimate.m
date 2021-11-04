@@ -60,15 +60,13 @@ function [estimatedRecPos,deltaPs] = leastSquareEstimate(currentdata, Cl, estima
         
          deltaPs(mod(count,3)+1) = errorCriteria;
 
-         if abs(prevMean - mean(deltaPs)) < 0.01
+         if abs(prevMean - mean(deltaPs)) < 0.00001
              stop = true;
          else
              prevMean = mean(deltaPs);
          end
 
         count = count + 1;
-        
-        A(:,end) = 1
         
     end
 end
