@@ -75,3 +75,46 @@ title('Plot of the clock drift');
 xlabel('Time epoch in sec');
 ylabel('Time error in sec');
 grid on;
+
+%%  Error Analysis
+
+truePositionENU = lla2enu(truegeoposition,truegeoposition(1,:),'ellipsoid');
+estPos = lla2enu(geoposition,truegeoposition(1,:),'ellipsoid');
+euclideanDistance = sqrt((truePositionENU(:,1)-estPos(:,1)).^2+...
+                         (truePositionENU(:,2)-estPos(:,2)).^2+...
+                         (truePositionENU(:,3)-estPos(:,3)).^2);
+meanPosErr = mean(euclideanDistance);
+stdPosErr = std(euclideanDistance);
+
+disp('Mean Position error is: ')
+disp(meanPosErr)
+disp('Standar deviation in Position error is: ')
+disp(stdPosErr)
+
+figure;
+plot(timeEpochsPlot,euclideanDistance);
+title('Position error at each time epoch')
+xlabel('Time in secs')
+ylabel('Error in m')
+grid on;
+
+figure;
+subplot(3,1,1);
+plot(timeEpochsPlot,truePositionENU(:,1)-estPos(:,1))
+subtitle('Error in East direction');
+ylabel('Error in m')
+grid on;
+title('Position error in individual axes in ENU frame')
+
+subplot(3,1,2);
+plot(timeEpochsPlot,truePositionENU(:,2)-estPos(:,2))
+subtitle('Error in North direction');
+ylabel('Error in m')
+grid on;
+
+subplot(3,1,3);
+plot(timeEpochsPlot,truePositionENU(:,3)-estPos(:,3))
+subtitle('Error in Up direction');
+ylabel('Error in m')
+grid on;
+

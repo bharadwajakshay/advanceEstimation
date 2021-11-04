@@ -4,6 +4,8 @@ function [estimatedRecPos,deltaPs] = leastSquareEstimate(currentdata, Cl, estima
     stop = false;
     count = 0;
     prevMean = 100;
+    
+    deltaPs = ones(5).*1000000;
 
     while ~stop
         % Step 1: caluclate the pseudo ranges for each satellite
@@ -58,12 +60,13 @@ function [estimatedRecPos,deltaPs] = leastSquareEstimate(currentdata, Cl, estima
         
          deltaPs(mod(count,3)+1) = errorCriteria;
 
-         if abs(prevMean - mean(deltaPs)) < 0.01
+         if abs(prevMean - mean(deltaPs)) < 0.00001
              stop = true;
          else
              prevMean = mean(deltaPs);
          end
 
         count = count + 1;
+        
     end
 end
